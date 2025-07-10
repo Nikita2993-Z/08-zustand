@@ -8,8 +8,7 @@ import type { Note } from '@/types/note';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
-import Modal from '@/components/Modal/Modal';
-import NoteForm from '@/components/NoteForm/NoteForm';
+import Link from 'next/link';
 import css from './Notes.client.module.css';
 
 interface NotesClientProps {
@@ -28,7 +27,6 @@ export default function NotesClient({
   const [query, setQuery] = useState<string>(initialQuery);
   const [debouncedQuery] = useDebounce(query, 500);
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -42,9 +40,6 @@ export default function NotesClient({
     refetchOnWindowFocus: false,
   });
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <div>
       <div className={css.controls}>
@@ -54,9 +49,9 @@ export default function NotesClient({
           currentPage={currentPage}
           setPage={setCurrentPage}
         />
-        <button onClick={openModal} className={css.createButton}>
+        <Link href="/notes/action/create" className={css.createButton}>
           Create note +
-        </button>
+        </Link>
       </div>
 
       {data?.notes && data.notes.length > 0 && (
@@ -65,11 +60,6 @@ export default function NotesClient({
 
       {isFetching && <p>Loading...</p>}
       {isError && <p>Error loading notes.</p>}
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
-        </Modal>
-      )}
     </div>
   );
 }
