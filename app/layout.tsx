@@ -1,15 +1,15 @@
 import "./globals.css";
-import { Roboto } from "next/font/google"
+import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import TanStackProvider from "../components/TanStackProvider/TanStackProvider";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import type { ReactNode } from "react";
 
-export const roboto = Roboto ({
+export const roboto = Roboto({
   weight: ["400", "700"],
-  subsets: ['latin'],
-  variable: '--font-roboto',
+  subsets: ["latin"],
+  variable: "--font-roboto",
   display: "swap",
 });
 
@@ -35,7 +35,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body>
+      <body className={roboto.className}>
         <TanStackProvider>
           <Header />
           <main style={{ flex: 1 }}>{children}</main>
@@ -46,6 +46,3 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
     </html>
   );
 }
-
-
-
